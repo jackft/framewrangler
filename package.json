@@ -1,13 +1,13 @@
 {
-  "name": "omniframe",
-  "version": "1.1.4",
+  "name": "framewrangler",
+  "version": "1.1.5",
   "description": "Read video frame numbers and step through videos",
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "main": "dist/omniframe.min.js",
+  "main": "dist/framewrangler.min.js",
   "module": "src/index.js",
   "keywords": [
     "annotation",
