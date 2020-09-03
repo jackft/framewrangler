@@ -1,0 +1,26 @@
+{
+  "name": "omniframe",
+  "version": "1.1.4",
+  "description": "Read video frame numbers and step through videos",
+  "private": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "main": "dist/omniframe.min.js",
+  "module": "src/index.js",
+  "keywords": [
+    "annotation",
+    "video"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Jack Terwilliger <jack.f.terwilliger@gmail.com> (http://jackterwilliger.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
