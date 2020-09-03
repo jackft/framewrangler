@@ -1,0 +1,44 @@
+<meta charset="UTF-8">
+<head>
+  <script src="./dist/framewrangler.min.js"></script>
+</head>
+
+<body>
+  <video id="vid" controls width="800px" height="450px">
+    <source src="./count.mp4">
+  </video>
+  <script>
+    const framey = new framewrangler.Framer(document.getElementById("vid"), 30);
+    framey.on("pause", () =>{
+      document.getElementById("counter").innerHTML = framey.getCurrentFrame();
+    });
+    framey.onframeupdate = () => {
+      document.getElementById("counter").innerHTML = framey.getCurrentFrame();
+    };
+
+    let playing = false;
+    document.addEventListener("keydown", (event) => {
+      switch(event.key) {
+        case " ":
+          event.preventDefault();
+          if (playing) {
+            framey.video.pause();
+            playing = false;
+          } else {
+            framey.video.play();
+            playing = true;
+          }
+          break;
+        case "k":
+          framey.stepForward();
+          break;
+        case "j":
+          framey.stepBackward();
+          break;
+        default:
+          console.log(event.key);
+      }
+    });
+  </script>
+  <p id="counter"></p>
+</body>

@@ -82,9 +82,7 @@ export class Framer {
     set onseeked(callback) {
         this.video.onseeked = (event) => {
             callback(event);
-            this._fixframe();
             this.onframeupdate(this);
-            setTimeout(() => {this.frozen = false;}, 50);
         };
     }
 
