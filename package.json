@@ -1,6 +1,6 @@
 {
   "name": "framewrangler",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Read video frame numbers and step through videos",
   "private": false,
   "scripts": {
