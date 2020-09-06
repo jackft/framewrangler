@@ -1,5 +1,5 @@
 const OPTS = {
-    offset: function(frate){return 0.3*frate},
+    offset: function(fduration){return 0.3*fduration},
     playbackCoef: 1.25
 }
 
@@ -21,9 +21,9 @@ export class Framer {
 
         this.opts = OPTS;
         if (this.opts !== undefined && opts.offset !== undefined) {
-            this.offset = this.opts.offset(this.FRAMERATE);
+            this.offset = this.opts.offset(this.FRAME_DURATION);
         } else {
-            this.offset = OPTS.offset(this.FRAMERATE);
+            this.offset = OPTS.offset(this.FRAME_DURATION);
         }
         if (this.opts !== undefined && opts.playbackCoef !== undefined) {
             this.playbackCoef = this.opts.playbackCoef;
