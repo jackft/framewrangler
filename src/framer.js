@@ -1,5 +1,10 @@
+const OPTS = {
+    offset: function(frate){return 0.3*frate},
+    playbackCoef: 1.25
+}
+
 export class Framer {
-    constructor(video, frameRate) {
+    constructor(video, frameRate, opts=OPTS) {
         this.video = video;
         ///////////////////////////////////////////////////////////////////////
         // FRAME VARIABLES
@@ -12,7 +17,19 @@ export class Framer {
         ///////////////////////////////////////////////////////////////////////
         this.FRAMERATE = frameRate;
         this.FRAME_DURATION = 1/this.FRAMERATE;
-        this.offset = 0.001;
+        this.playbackFactor = 0;
+
+        this.opts = OPTS;
+        if (this.opts !== undefined && opts.offset !== undefined) {
+            this.offset = this.opts.offset(this.FRAMERATE);
+        } else {
+            this.offset = OPTS.offset(this.FRAMERATE);
+        }
+        if (this.opts !== undefined && opts.playbackCoef !== undefined) {
+            this.playbackCoef = this.opts.playbackCoef;
+        } else {
+            this.playbackCoef = OPTS.playbackCoef;
+        }
 
         ///////////////////////////////////////////////////////////////////////
         // Set up listeners
@@ -49,6 +66,20 @@ export class Framer {
     stepBackward(n=1) {
         this.frameupdate(this.setFrame(this.getFrame() - n));
     }
+    
+    setPlayback(rate) {
+        this.video.playbackRate = rate;
+    }
+
+    speedUp() {
+        this.playbackFactor = this.playbackFactor + 1;
+        this.setPlayback(this.playbackCoef ** this.playbackFactor);
+    }
+
+    slowDown() {
+        this.playbackFactor = this.playbackFactor - 1;
+        this.setPlayback(this.playbackCoef ** this.playbackFactor);
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Modify Video Events
@@ -59,6 +90,9 @@ export class Framer {
         this.video.addEventListener("mouseup", () => {this._onmouseup()});
         this.video.addEventListener("timeupdate", () => {
             this.frameupdate({frame: this.getFrame(), time: this.getTime()});
+        });
+        this.video.addEventListener("ratechange", () => {
+            this.playbackSpeedChange({speed: this.video.playbackRate});
         });
     }
 
@@ -79,6 +113,10 @@ export class Framer {
     ////////////////////////////////////////////////////////////////////////////
     frameupdate(event) {
         this.events["frameupdate"].forEach(f => f(event));
+    }
+
+    playbackSpeedChange(event) {
+        this.events["playbackSpeedChange"].forEach(f => f(event));
     }
 
     ////////////////////////////////////////////////////////////////////////////

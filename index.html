@@ -9,12 +9,12 @@
   </video>
   <script>
     const framey = new framewrangler.Framer(document.getElementById("vid"), 30);
-    framey.on("pause", () =>{
-      document.getElementById("counter").innerHTML = framey.getCurrentFrame();
+    framey.addEventListener("frameupdate", (event) =>{
+      document.getElementById("counter").innerHTML = event.frame;
     });
-    framey.onframeupdate = () => {
-      document.getElementById("counter").innerHTML = framey.getCurrentFrame();
-    };
+    framey.addEventListener("playbackSpeedChange", (event) =>{
+      console.log(event);
+    });
 
     let playing = false;
     document.addEventListener("keydown", (event) => {
@@ -34,6 +34,12 @@
           break;
         case "j":
           framey.stepBackward();
+          break;
+        case "+":
+          framey.speedUp();
+          break;
+        case "-":
+          framey.slowDown();
           break;
         default:
           console.log(event.key);
