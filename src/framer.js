@@ -38,7 +38,7 @@ export class Framer {
             "frameupdate": [],
             "playbackSpeedChange": []
         }
-
+        this._lastFrame = null; // for fewer extraneous frameupdate events
         this._setupVideoEvents();
     }
 
@@ -85,6 +85,7 @@ export class Framer {
     // Modify Video Events
     ////////////////////////////////////////////////////////////////////////////
     _setupVideoEvents() {
+        this.video.addEventListener("play", () => {this._onplay()});
         this.video.addEventListener("pause", () => {this._onpause()});
         this.video.addEventListener("seeked", () => {this._onseeked()});
         this.video.addEventListener("mouseup", () => {this._onmouseup()});
@@ -94,6 +95,10 @@ export class Framer {
         this.video.addEventListener("ratechange", () => {
             this.playbackSpeedChange({speed: this.video.playbackRate});
         });
+    }
+
+    _onplay() {
+        this._watchForFrameUpdate();
     }
 
     _onpause() {
@@ -106,6 +111,16 @@ export class Framer {
 
     _onseeked() {
         this.frameupdate(this.setFrame(this.getFrame()));
+    }
+
+    _watchForFrameUpdate() {
+        const frame = this.getFrame();
+        if (frame != this._lastFrame) {
+            this._lastFrame = frame;
+            this.frameupdate({frame: frame, time: this.getTime()});
+        }
+        if (!this.video.paused)
+            requestAnimationFrame(() => this._watchForFrameUpdate())
     }
 
     ////////////////////////////////////////////////////////////////////////////
