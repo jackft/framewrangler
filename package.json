@@ -1,6 +1,6 @@
 {
   "name": "framewrangler",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Read video frame numbers and step through videos",
   "private": false,
   "scripts": {
@@ -20,7 +20,7 @@
   "author": "Jack Terwilliger <jack.f.terwilliger@gmail.com> (http://jackterwilliger.com)",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
 }
